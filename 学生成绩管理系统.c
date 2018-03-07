@@ -1,4 +1,3 @@
-```
 #include<stdio.h>
 #include<stdlib.h>
 #include<conio.h>
@@ -334,4 +333,3 @@ void search()//查找学生成绩函数
         printf("未查到该学生信息");
         return;}
 }
-```
