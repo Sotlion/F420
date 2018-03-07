@@ -118,8 +118,8 @@ void in()//录入学生信息的函数
     scanf("%s",ch);
     if(strcmp(ch,"Y")==0||strcmp(ch,"y")==0)
     {
-        printf("请输入以下成绩所占比重:\n");
-        printf("选修课:");
+        printf("请输入以下成绩所占比重:");
+        printf("\n选修课:");
         scanf("%f",&Felec);
         printf("\n实验课:");
         scanf("%f",&Fexpe);
@@ -128,15 +128,15 @@ void in()//录入学生信息的函数
     }
     while(strcmp(ch,"Y")==0||strcmp(ch,"y")==0)//判断是否要录入新信息
     {
-        printf("学号:");
+        printf("\n学号:");
         scanf("%d",&stu[m].num);//输入学生学号
-        printf("姓名:");
+        printf("\n姓名:");
         scanf("%s",stu[m].name);
-        printf("选修课成绩:");
+        printf("\n选修课成绩:");
         scanf("%lf",&stu[m].elec);
-        printf("实验课成绩:");
+        printf("\n实验课成绩:");
         scanf("%lf",&stu[m].expe);
-        printf("必修课成绩:");
+        printf("\n必修课成绩:");
         scanf("%lf",&stu[m].requ);
         stu[m].sum=stu[m].elec*Felec+stu[m].expe*Fexpe+stu[m].requ*Frequ;//计算总成绩
         if(fwrite(&stu[m],LEN,1,fp)!=1)//将新信息录入文件
@@ -204,7 +204,7 @@ void menu()//菜单界面
     printf("\t\t|\t 3. 删除成绩                       |\n");
     printf("\t\t|\t 4. 修改成绩                       |\n");
     printf("\t\t|\t 5. 插入成绩                       |\n");
-    printf("\t\t|\t 6. 查看排名                               |\n");
+    printf("\t\t|\t 6. 成绩排序                               |\n");
     printf("\t\t|\t 7. 年级人数                              |\n");
     printf("\t\t|-----------------------------------------------|\n\n");
     printf("\t\t\tchoose(0-7):");
@@ -259,9 +259,10 @@ void order()//按总分数排序的函数
           }
                 for(i=0;i<m;i++)//重新写入文件里
                     fwrite(&stu[i] ,LEN,1,fp);
-                   
+
                     fclose(fp);
                     printf("保存成功\n");
+                    show();
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -409,11 +410,11 @@ void total()//计算总人数函数
     FILE *fp;
     int m=0;
     if((fp=fopen("data","ab+"))==NULL)
-    {         
+    {
         printf("无法打开\n");
         return;
     }
-    while(!feof(fp))  
+    while(!feof(fp))
         if(fread(&stu[m],LEN,1,fp)==1)
             m++;//统计记录个数即学生个数
         if(m==0)
@@ -460,19 +461,16 @@ void search()//查找学生成绩函数
     printf("请输入学号:");
     scanf("%d",&snum);
     for(i=0;i<m;i++)
-        {if(snum==stu[i].num)//看是否在记录中
-    {
+        if(snum==stu[i].num)//看是否在记录中
+        {
+            printf("学号            姓名   选修课成绩  实验课成绩  必修课成绩  总成绩\t\n");
+            printf(FORMAT,DATA);//指定格式输出
+            return;
+        }
 
 
-        printf("学号            姓名   选修课成绩  实验课成绩  必修课成绩  总成绩\t\n");
-        printf(FORMAT,DATA);//指定格式输出
-        break;
 
-
-    }
-    else
-        printf("未查到该学生信息");
-        return;}
+    return;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
